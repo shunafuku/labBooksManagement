@@ -11,18 +11,16 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.apache.jena:apache-jena-libs:4.7.0'
+	// https://mvnrepository.com/artifact/org.apache.jena/jena
+	implementation 'org.apache.jena:jena:5.0.0'
+    // https://mvnrepository.com/artifact/org.apache.jena/jena-core
+	implementation 'org.apache.jena:jena-core:5.0.0'
+	// https://mvnrepository.com/artifact/org.apache.jena/jena-arq
+	implementation 'org.apache.jena:jena-arq:5.0.0'
+	
+	
+	// https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+	implementation 'org.slf4j:slf4j-api:2.0.16'
+	
 }
 
-application {
-    mainClass = 'JenaNTriplesTest'
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
