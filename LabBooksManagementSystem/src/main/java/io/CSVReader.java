@@ -38,16 +38,15 @@ public class CSVReader {
      * @return CSVの内容を表すArrayList
      * @throws IOException ファイル読み込み時のエラー
      */
-    public List<List<String>> readCSV(String filePath) throws IOException {
+    public static List<List<String>> readCSV(String filePath) throws IOException {
         return readCSV(filePath, ",");
     }
 
     // 使用例
     public static void main(String[] args) {
         String filePath = "data.csv";
-        CSVReader csvReader = new CSVReader();
         try {
-            List<List<String>> csvData = csvReader.readCSV(filePath);
+            List<List<String>> csvData = CSVReader.readCSV(filePath);
             // 結果の表示
             csvData.forEach(System.out::println);
         } catch (IOException e) {
