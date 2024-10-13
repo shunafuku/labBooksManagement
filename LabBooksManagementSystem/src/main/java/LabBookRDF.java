@@ -70,8 +70,8 @@ public class LabBookRDF {
 		Property rdfsSubClassOf = model.createProperty(RDFS, "subClassOf");
 
 		// resource
-		Resource targetBookResource = model.createResource("https://hozo.jp/books/entity/" + isbn13 + "/1");
-		Resource labBookClass = model.createResource("https://hozo.jp/books/class/book");
+		Resource targetBookResource = model.createResource("http://hozo.jp/books/entity/" + isbn13 + "/1");
+		Resource labBookClass = model.createResource("http://hozo.jp/books/class/book");
 
 		// createTriple
 		targetBookResource.addProperty(dctermsIdentifier, model.createTypedLiteral(isbn13, isbnDatatype));
@@ -86,7 +86,7 @@ public class LabBookRDF {
 		// クエリ文字列
 		String queryString = """
 				SELECT DISTINCT ?book WHERE {
-					?book <http://www.w3.org/2000/01/rdf-schema#subClassOf> <https://hozo.jp/books/class/book> .
+					?book <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://hozo.jp/books/class/book> .
 				}
 				""";
 		// クエリオブジェクトの作成
