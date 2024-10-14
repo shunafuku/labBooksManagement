@@ -25,11 +25,13 @@ import org.apache.jena.rdf.model.Resource;
 import io.CSVReader;
 
 public class LabBookRDF {
+	public static String bookNS = "http://hozo.jp/";
 	public static void main(String[] args) throws Exception {
 		//		String isbnListFilePathString = "isbn_list.csv";
 		String isbnListFilePathString = args[0];
 		//		List<String> isbns = Arrays.asList("9781846288845","9783540929123", "9784000074773","9784000076852","9784000077965");
-
+		String outputFilePathString = args[1];
+		bookNS = args[2];
 		//csvファイルから、ISBN(ここでは、すべて13桁ISBNであることを前提としている)一覧を取得
 		List<String> isbns = CSVReader.readCSV(isbnListFilePathString).get(0);
 		//ISBN一覧から、ベースとなる知識グラフを構築
@@ -42,7 +44,7 @@ public class LabBookRDF {
 		Model resultModel = LabBookRDF.complementBookInfoFromNdl(combinedModel);
 
 		try {
-			FileOutputStream out = new FileOutputStream(args[1]);
+			FileOutputStream out = new FileOutputStream(outputFilePathString);
 			resultModel.write(out, "TURTLE");
 			out.close();
 		} catch (IOException e) {
@@ -70,8 +72,8 @@ public class LabBookRDF {
 		Property rdfsSubClassOf = model.createProperty(RDFS, "subClassOf");
 
 		// resource
-		Resource targetBookResource = model.createResource("http://hozo.jp/books/entity/" + isbn13 + "/1");
-		Resource labBookClass = model.createResource("http://hozo.jp/books/class/book");
+		Resource targetBookResource = model.createResource(bookNS + "books/entity/" + isbn13 + "/1");
+		Resource labBookClass = model.createResource(bookNS + "books/class/book");
 
 		// createTriple
 		targetBookResource.addProperty(dctermsIdentifier, model.createTypedLiteral(isbn13, isbnDatatype));
@@ -86,9 +88,9 @@ public class LabBookRDF {
 		// クエリ文字列
 		String queryString = """
 				SELECT DISTINCT ?book WHERE {
-					?book <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://hozo.jp/books/class/book> .
+					?book <http://www.w3.org/2000/01/rdf-schema#subClassOf> <%sbooks/class/book> .
 				}
-				""";
+				""".formatted(bookNS);
 		// クエリオブジェクトの作成
 		Query query = QueryFactory.create(queryString);
 
