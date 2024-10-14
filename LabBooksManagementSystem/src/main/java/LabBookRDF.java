@@ -27,7 +27,7 @@ import io.CSVReader;
 public class LabBookRDF {
 	public static void main(String[] args) throws Exception {
 		//		String isbnListFilePathString = "isbn_list.csv";
-		String isbnListFilePathString = "isbn_list.csv";
+		String isbnListFilePathString = args[0];
 		//		List<String> isbns = Arrays.asList("9781846288845","9783540929123", "9784000074773","9784000076852","9784000077965");
 
 		//csvファイルから、ISBN(ここでは、すべて13桁ISBNであることを前提としている)一覧を取得
@@ -42,7 +42,7 @@ public class LabBookRDF {
 		Model resultModel = LabBookRDF.complementBookInfoFromNdl(combinedModel);
 
 		try {
-			FileOutputStream out = new FileOutputStream("output/" + "combined_model.ttl");
+			FileOutputStream out = new FileOutputStream(args[1]);
 			resultModel.write(out, "TURTLE");
 			out.close();
 		} catch (IOException e) {
